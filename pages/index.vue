@@ -202,7 +202,7 @@ const calculos = computed(() => {
     progressoes.push({
       data: dataJan2025,
       intersticio: [intersticioStartOld, dataJan2025.minus({ days: 1 })],
-      notas: `Aniversario em Janeiro/2025 (saldo de ${readSaldo(saldoEmJan2025)})`,
+      notas: `Mais de 12 meses em Janeiro/2025 (saldo de ${readSaldo(saldoEmJan2025)})`,
     });
     if (tempoParaProxProgressaoNormalized.months < 12) {
       progressoes.push({
