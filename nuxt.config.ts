@@ -32,9 +32,13 @@ export default defineNuxtConfig({
   ],
   app: {
     head: {
+      title: "Calculadora de Progressão por Capacitação para TAE",
       bodyAttrs: {
         class: "bg-slate-200 dark:bg-slate-900",
       },
+      htmlAttrs: {
+        lang: "pt-BR",
+      }
     },
   },
 });
