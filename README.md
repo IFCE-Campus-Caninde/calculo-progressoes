@@ -17,7 +17,7 @@ O sistema segue a interpretação do [Ofício-Circular nº 35/2025/GAB-PROGEP/PR
 
 - **[Nuxt 3](https://nuxt.com/)**: Framework principal para desenvolvimento web com Vue.js.
 - **[Vue.js](https://vuejs.org/)**: Biblioteca JavaScript para construção da interface do usuário.
-- **[PrimeVue](https://www.primefaces.org/primevue/)**: Componentes UI prontos para Vue.js.
+- **[PrimeVue](https://primevue.org/)**: Componentes UI prontos para Vue.js.
 - **[Luxon](https://moment.github.io/luxon/)**: Manipulação e cálculo de datas.
 - **[TailwindCSS](https://tailwindcss.com/)**: Utilitário para estilização rápida e responsiva.
 - **[TypeScript](https://www.typescriptlang.org/)**: Superset do JavaScript para tipagem estática.
