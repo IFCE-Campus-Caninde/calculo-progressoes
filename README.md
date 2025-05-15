@@ -13,6 +13,18 @@ O sistema segue a interpretação do [Ofício-Circular nº 35/2025/GAB-PROGEP/PR
 
 > **Atenção:** Os resultados são baseados em interpretações e podem ser ajustados conforme novas orientações oficiais.
 
+## Principais Ferramentas utilizadas
+
+- **[Nuxt 3](https://nuxt.com/)**: Framework principal para desenvolvimento web com Vue.js.
+- **[Vue.js](https://vuejs.org/)**: Biblioteca JavaScript para construção da interface do usuário.
+- **[PrimeVue](https://www.primefaces.org/primevue/)**: Componentes UI prontos para Vue.js.
+- **[Luxon](https://moment.github.io/luxon/)**: Manipulação e cálculo de datas.
+- **[TailwindCSS](https://tailwindcss.com/)**: Utilitário para estilização rápida e responsiva.
+- **[TypeScript](https://www.typescriptlang.org/)**: Superset do JavaScript para tipagem estática.
+- **[ESLint](https://eslint.org/)** & **[Prettier](https://prettier.io/)**: Padronização e formatação automática do código.
+- **[GitHub Pages](https://pages.github.com/)**: Hospedagem gratuita do sistema estático.
+- **[GitHub Actions](https://github.com/features/actions)**: Automatização do deploy.
+
 ## Como usar
 
 O sistema será disponibilizado publicamente via **GitHub Pages**. Basta acessar o link do repositório e utilizar a interface web, sem necessidade de instalação.
@@ -57,3 +69,4 @@ https://<seu-usuario>.github.io/calculo-progressoes/
 - [Ofício-Circular nº 35/2025/GAB-PROGEP/PROGEP/REITORIA-IFCE](https://sei.ifce.edu.br/sei/controlador_externo.php?acao=documento_conferir&codigo_verificador=7312739&codigo_crc=3CFEF38D&hash_download=e6e4e56bdaee0319554a3d88fa0ae2741c225425cc78d17b36d4034f1840b9a900e720fa42f39a8f4c986dec0b6173d42190cbea8b2fff8e21075d324c660c0c&visualizacao=1&id_orgao_acesso_externo=0)
 
 ---
+````
