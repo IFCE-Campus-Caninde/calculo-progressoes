@@ -95,11 +95,11 @@
                 </span>
               </Chip>
             </div>
-            <div class="mb-2 flex flex-col gap-1">
+            <div v-if="calculos.new.progrideEmJan2025" class="mb-2 flex flex-col gap-1">
               <span class="font-semibold">Saldo remanescente:</span>
               <Chip class="">{{ readSaldo(calculos.new.saldoRestante) }}</Chip>
             </div>
-            <div class="mb-2 flex flex-col gap-1">
+            <div v-if="calculos.new.progrideEmJan2025" class="mb-2 flex flex-col gap-1">
               <span class="font-semibold">Tempo até a próxima progressão:</span>
               <Chip class=""
                 >{{ readSaldo(calculos.new.tempoParaProxProgressao) }}</Chip
@@ -221,6 +221,7 @@ const calculos = computed(() => {
     progressoes.push({
       data,
       intersticio: [intersticioStartOld, data.minus({ days: 1 })],
+      notas: "Modificado para a nova regra de 12 meses",
     });
   }
   const moreProgressao = 6 - progressoes.length;
@@ -230,6 +231,7 @@ const calculos = computed(() => {
     progressoes.push({
       data: data,
       intersticio: [anterior, data.minus({ days: 1 })],
+      notas: "Nova regra de 12 meses",
     });
   }
   return {
