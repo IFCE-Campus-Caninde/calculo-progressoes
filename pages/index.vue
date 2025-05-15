@@ -34,7 +34,7 @@
             menos 12 meses de interstício até 01/01/2025.
           </li>
           <li>
-            O saldo remanscente é contado com base em meses e dias a partir de 01/01/2025.
+            O saldo remanescente é contado com base em meses e dias a partir de 01/01/2025.
           </li>
           <li>
             Se o servidor não progredir em janeiro de 2025, o saldo passa a ser
