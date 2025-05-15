@@ -34,9 +34,7 @@
             menos 12 meses de interstício até 01/01/2025.
           </li>
           <li>
-            Para simplificação, o saldo é contado a partir do dia do aniversário
-            da progressão em janeiro de 2025. Caso o saldo fosse em dias,
-            considerar-se-iam apenas os dias após 01/01/2025.
+            O saldo remanscente é contado com base em meses e dias a partir de 01/01/2025.
           </li>
           <li>
             Se o servidor não progredir em janeiro de 2025, o saldo passa a ser
@@ -79,38 +77,32 @@
           <Panel header="Nova Regra" class="rounded-lg shadow">
             <div class="mb-2 flex flex-col gap-1">
               <span class="font-semibold"
-                >Data de aniversário em janeiro/2025:</span
+                >Tempo acumulado até 01/01/2025:</span
               >
-              <Chip class="">{{ calculos.new.aniversarioJan2025 }}</Chip>
+              <Chip class="">{{ readSaldo(calculos.new.saldoEmJan2025) }}</Chip>
             </div>
             <div class="mb-2 flex flex-col gap-1">
-              <span class="font-semibold"
-                >Tempo acumulado até o aniversário:</span
-              >
-              <Chip class="">{{ calculos.new.saldoNoAniversario }} meses</Chip>
-            </div>
-            <div class="mb-2 flex flex-col gap-1">
-              <span class="font-semibold">Progride em Janeiro/2025:</span>
+              <span class="font-semibold">Progride em 01/01/2025:</span>
               <Chip
                 ><span
                   :class="
-                    calculos.new.progrideNoAniversario
+                    calculos.new.progrideEmJan2025
                       ? 'text-green-600 font-bold'
                       : 'text-red-600 font-bold'
                   "
                 >
-                  {{ calculos.new.progrideNoAniversario ? "Sim" : "Não" }}
+                  {{ calculos.new.progrideEmJan2025 ? "Sim" : "Não" }}
                 </span>
               </Chip>
             </div>
             <div class="mb-2 flex flex-col gap-1">
               <span class="font-semibold">Saldo remanescente:</span>
-              <Chip class="">{{ calculos.new.saldoRestante }} meses</Chip>
+              <Chip class="">{{ readSaldo(calculos.new.saldoRestante) }}</Chip>
             </div>
             <div class="mb-2 flex flex-col gap-1">
-              <span class="font-semibold">Meses até a próxima progressão:</span>
+              <span class="font-semibold">Tempo até a próxima progressão:</span>
               <Chip class=""
-                >{{ calculos.new.mesesParaProxProgressao }} meses</Chip
+                >{{ readSaldo(calculos.new.tempoParaProxProgressao) }}</Chip
               >
             </div>
           </Panel>
@@ -152,7 +144,7 @@
 </template>
 
 <script setup lang="ts">
-import { DateTime } from "luxon";
+import { DateTime, Duration } from "luxon";
 
 type Progressao = {
   data: DateTime;
@@ -160,12 +152,18 @@ type Progressao = {
   notas?: string;
 };
 
+type Saldo = {
+  months: number;
+  days: number;
+}
+
 const maxDate = DateTime.fromObject({ year: 2025, month: 1, day: 1 }).minus({
   days: 1,
 });
 const minDate = DateTime.fromObject({ year: 2023, month: 7, day: 1 })
-//const dataTeste = DateTime.fromObject({ year: 2023, month: 7, day: 4 }).toJSDate()
-const date = ref<Date | null>(null);
+const dataTeste = DateTime.fromObject({ year: 2023, month: 7, day: 4 }).toJSDate()
+const date = ref<Date | null>(dataTeste);
+//const date = ref<Date | null>(null);
 const calculos = computed(() => {
   if (!date.value) return null;
   const proxProgressaoOld = DateTime.fromJSDate(date.value).plus({
@@ -173,42 +171,51 @@ const calculos = computed(() => {
   });
   const intersticioStartOld = DateTime.fromJSDate(date.value);
   const intersticioEndOld = proxProgressaoOld.minus({ days: 1 });
-  const aniversarioJan2025 = DateTime.fromObject({
+  const dataJan2025 = DateTime.fromObject({
     year: 2025,
     month: 1,
-    day: intersticioStartOld.day,
+    day: 1,
   });
-  const saldoNoAniversario = aniversarioJan2025.diff(
+
+  const saldoEmJan2025 = dataJan2025.diff(
     intersticioStartOld,
-    "months",
-  ).months;
-  let saldoRestante = saldoNoAniversario - 12;
-  const progrideNoAniversario = saldoRestante >= 0;
-  if (saldoRestante < 0) {
-    saldoRestante = 0;
-  }
-  const mesesParaProxProgressao = 12 - saldoRestante;
-  const proxProgressaoUsandoSaldo = aniversarioJan2025.plus({
-    months: mesesParaProxProgressao,
+    ["months", "days"]
+  )
+
+  const saldoRestante = saldoEmJan2025.minus({
+    months: 12,
   });
+  const progrideEmJan2025 = intersticioStartOld <= DateTime.fromObject({
+    year: 2023,
+    month: 12,
+    day: 31,
+  })
+  const tempoParaProxProgressao = Duration.fromObject({months: 12, days: 0}).minus(saldoRestante);
+
+  const proxProgressaoUsandoSaldo = dataJan2025.plus(tempoParaProxProgressao);
+  const tempoParaProxProgressaoNormalized = proxProgressaoUsandoSaldo.diff(
+    dataJan2025,
+    ["months", "days"]
+  );
   const progressoes: Progressao[] = [];
-  if (progrideNoAniversario) {
+  if (progrideEmJan2025) {
     progressoes.push({
-      data: aniversarioJan2025,
-      intersticio: [intersticioStartOld, aniversarioJan2025.minus({ days: 1 })],
-      notas: `Aniversario em Janeiro/2025 (saldo de ${saldoNoAniversario} meses)`,
+      data: dataJan2025,
+      intersticio: [intersticioStartOld, dataJan2025.minus({ days: 1 })],
+      notas: `Aniversario em Janeiro/2025 (saldo de ${readSaldo(saldoEmJan2025)})`,
     });
+    if (tempoParaProxProgressaoNormalized.months < 12) {
+      progressoes.push({
+        data: proxProgressaoUsandoSaldo,
+        intersticio: [
+          dataJan2025,
+          proxProgressaoUsandoSaldo.minus({ days: 1 }),
+        ],
+        notas: `usando saldo de ${readSaldo(saldoRestante)}`,
+      });
+    }
   }
-  if (mesesParaProxProgressao < 12) {
-    progressoes.push({
-      data: proxProgressaoUsandoSaldo,
-      intersticio: [
-        aniversarioJan2025,
-        proxProgressaoUsandoSaldo.minus({ days: 1 }),
-      ],
-      notas: `usando saldo de ${saldoRestante} meses`,
-    });
-  }
+  
   if (progressoes.length === 0) {
     const data = intersticioStartOld.plus({ months: 12 });
     progressoes.push({
@@ -234,11 +241,19 @@ const calculos = computed(() => {
       ],
     },
     new: {
-      aniversarioJan2025: aniversarioJan2025.toFormat("dd/MM/yyyy"),
-      saldoNoAniversario: saldoNoAniversario,
-      saldoRestante: saldoRestante,
-      mesesParaProxProgressao: mesesParaProxProgressao,
-      progrideNoAniversario: progrideNoAniversario,
+      saldoEmJan2025: {
+        months: saldoEmJan2025.months,
+        days: saldoEmJan2025.days,
+      } as Saldo,
+      saldoRestante: {
+        months: saldoRestante.months,
+        days: saldoRestante.days,
+      } as Saldo,
+      tempoParaProxProgressao: {
+        months: tempoParaProxProgressaoNormalized.months,
+        days: tempoParaProxProgressaoNormalized.days,
+      } as Saldo,
+      progrideEmJan2025: progrideEmJan2025,
     },
     progressoes: progressoes.map((p) => {
       return {
@@ -252,4 +267,16 @@ const calculos = computed(() => {
     }),
   };
 });
+
+const readSaldo = (saldo: Saldo): string => {
+  let str = "";
+  if (saldo.months > 0) {
+    str += `${saldo.months} meses`;
+  }
+  if (saldo.days > 0) {
+    if (str.length > 0) str += " e ";
+    str += `${saldo.days} dias`;
+  }
+  return str.length > 0 ? str : "0 dias";
+}
 </script>
