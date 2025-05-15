@@ -41,4 +41,15 @@ export default defineNuxtConfig({
       }
     },
   },
+  icon: {
+    mode: 'css',
+    cssLayer: 'base',
+    clientBundle: {
+      icons: [
+        'material-symbols:sunny',
+        'material-symbols:moon-stars'
+      ],
+      scan: true,
+    }
+  }
 });
