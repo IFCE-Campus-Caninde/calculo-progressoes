@@ -82,7 +82,7 @@
               <Chip class="">{{ readSaldo(calculos.new.saldoEmJan2025) }}</Chip>
             </div>
             <div class="mb-2 flex flex-col gap-1">
-              <span class="font-semibold">Progride em 01/01/2025:</span>
+              <span class="font-semibold">Progride em 01/01/2025 usando saldo?</span>
               <Chip
                 ><span
                   :class="
@@ -161,9 +161,9 @@ const maxDate = DateTime.fromObject({ year: 2025, month: 1, day: 1 }).minus({
   days: 1,
 });
 const minDate = DateTime.fromObject({ year: 2023, month: 7, day: 1 })
-const dataTeste = DateTime.fromObject({ year: 2023, month: 7, day: 4 }).toJSDate()
-const date = ref<Date | null>(dataTeste);
-//const date = ref<Date | null>(null);
+//const dataTeste = DateTime.fromObject({ year: 2023, month: 7, day: 4 }).toJSDate()
+//const date = ref<Date | null>(dataTeste);
+const date = ref<Date | null>(null);
 const calculos = computed(() => {
   if (!date.value) return null;
   const proxProgressaoOld = DateTime.fromJSDate(date.value).plus({
