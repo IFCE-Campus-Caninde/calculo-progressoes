@@ -1,92 +1,107 @@
 <template>
-    <div class="container mx-auto px-4">
-        <Message severity="warn" class="m-4">
+    <div class="container mx-auto px-2 sm:px-4 py-6">
+        <Message severity="warn" class="m-4 rounded-lg shadow-md">
 
-            <div class="text-center">
-                Estes cálculos são feitos conforme interpretação do
+            <div class="text-center mb-2">
+                Os cálculos apresentados seguem interpretação do
                 <a
-class="text-blue-500 font-bold hover:underline"
-                    href="https://sei.ifce.edu.br/sei/controlador_externo.php?acao=documento_conferir&codigo_verificador=7312739&codigo_crc=3CFEF38D&hash_download=e6e4e56bdaee0319554a3d88fa0ae2741c225425cc78d17b36d4034f1840b9a900e720fa42f39a8f4c986dec0b6173d42190cbea8b2fff8e21075d324c660c0c&visualizacao=1&id_orgao_acesso_externo=0">Ofício-Circular
-                    nº 35/2025/GAB-PROGEP/PROGEP/REITORIA-IFCE</a>, podendo ser corrigido caso haja alguma
-                divergência.
+class="text-blue-600 font-semibold hover:underline"
+                    href="https://sei.ifce.edu.br/sei/controlador_externo.php?acao=documento_conferir&codigo_verificador=7312739&codigo_crc=3CFEF38D&hash_download=e6e4e56bdaee0319554a3d88fa0ae2741c225425cc78d17b36d4034f1840b9a900e720fa42f39a8f4c986dec0b6173d42190cbea8b2fff8e21075d324c660c0c&visualizacao=1&id_orgao_acesso_externo=0"
+                    target="_blank" rel="noopener">Ofício-Circular nº 35/2025/GAB-PROGEP/PROGEP/REITORIA-IFCE</a>.
+                Caso haja divergências, os resultados poderão ser ajustados.
             </div>
-            <div class="text-center">
-                O autor não se responsabiliza por eventuais erros com a interpretação ou o cálculo.
+            <div class="text-center text-xs ">
+                O autor não se responsabiliza por eventuais equívocos de interpretação ou cálculo.
             </div>
 
         </Message>
-        <h1 class="text-2xl text-center">Calculadora de Progressão por Capacitação TAE</h1>
-        <h2 class="text-xl mb-4 text-center text-muted">(Para progressões após 2025)</h2>
+        <h1 class="text-3xl font-bold text-center mt-2 mb-1 ">Calculadora de Progressão por Capacitação para TAE</h1>
+        <h2 class="text-lg sm:text-xl mb-6 text-center  font-medium">(Válida para progressões a partir de 2025)</h2>
 
-        <div class="flex flex-col gap-4">
-            <Panel header="Entendimento utilizado para os cálculos:">
-                <ul class="list-disc list-inside text-sm flex flex-col gap-2 ms-4">
+        <div class="flex flex-col gap-6">
+            <Panel header="Critérios considerados nos cálculos:" class="shadow-sm rounded-lg">
+                <ul class="list-disc list-inside text-sm flex flex-col gap-2 ms-4 ">
                     <li>
-                        Para utilizar qualquer saldo, o servidor deve ter completado pelo menos 12 meses de intersticio
-                        em
-                        01/01/2025.
+                        Para utilizar qualquer saldo, o servidor deve ter completado pelo menos 12 meses de interstício
+                        até 01/01/2025.
                     </li>
                     <li>
-                        Para simplificar o cálculo, o saldo é considerado a partir do dia de aniversário da progressão
-                        em janeiro
-                        de 2025. Tecnicamente, se o saldo fosse em dias e não em meses, bastaria considerar os dias
-                        depois de 01/01/2025.
+                        Para simplificação, o saldo é contado a partir do dia do aniversário da progressão em janeiro de
+                        2025. Caso o saldo fosse em dias, considerar-se-iam apenas os dias após 01/01/2025.
                     </li>
                     <li>
-                        Para os casos em que o servidor não progrida em janeiro de 2025, o saldo é considerado a partir
-                        da
-                        data efetiva da última progressão, usando a nova regra de 12 meses.
+                        Se o servidor não progredir em janeiro de 2025, o saldo passa a ser contado a partir da data
+                        efetiva da última progressão, já sob a nova regra de 12 meses.
                     </li>
                 </ul>
             </Panel>
             <Panel
-                :header="`Selecione a data efetiva da última progressão do servidor (entre ${minDate.toFormat('dd/MM/yyyy')} a 31/12/2024):`"
-                class="text-center">
-                <DatePicker
+                :header="`Informe a data efetiva da última progressão do servidor (entre ${minDate.toFormat('dd/MM/yyyy')} e 31/12/2024):`"
+                class="text-center shadow-sm rounded-lg">
+                <div class="flex justify-center">
+                    <DatePicker
 v-model="date" :min-date="minDate.toJSDate()" :max-date="maxDate.toJSDate()"
-                    date-format="dd/mm/yy" placeholder="dd/mm/aaaa" />
+                        date-format="dd/mm/yy" placeholder="dd/mm/aaaa" class="w-full max-w-xs" />
+                </div>
             </Panel>
-            <div v-if="calculos" class="flex flex-row gap-4">
-                <div class="flex-1 flex flex-col gap-4">
-                    <Panel header="Regra Antiga">
-
-                        <div class="mb-2">Próxima progressão: {{ calculos.old.proxProgressao }}</div>
-                        <div class="mb-2">Interstício: {{ calculos.old.intersticio[0] }} a {{
-                            calculos.old.intersticio[1] }} (18 meses)</div>
-
+            <div v-if="calculos" class="flex flex-col lg:flex-row gap-6">
+                <div class="flex-1 flex flex-col gap-6">
+                    <Panel header="Regra Anterior" class="rounded-lg shadow">
+                        <div class="mb-2 flex flex-col gap-1">
+                            <span class="font-semibold ">Próxima progressão:</span>
+                            <span class="">{{ calculos.old.proxProgressao }}</span>
+                        </div>
+                        <div class="mb-2 flex flex-col gap-1">
+                            <span class="font-semibold ">Interstício:</span>
+                            <span class="">{{ calculos.old.intersticio[0] }} a {{ calculos.old.intersticio[1] }} <span
+                                    class="text-xs ">(18 meses)</span></span>
+                        </div>
                     </Panel>
-                    <Panel header="Regra Nova">
-
-                        <div class="mb-2">Data Aniversário em Janeiro/2025: {{ calculos.new.aniversarioJan2025 }}
+                    <Panel header="Nova Regra" class="rounded-lg shadow">
+                        <div class="mb-2 flex flex-col gap-1">
+                            <span class="font-semibold ">Data de aniversário em janeiro/2025:</span>
+                            <span class="">{{ calculos.new.aniversarioJan2025 }}</span>
                         </div>
-                        <div class="mb-2">Tempo acumulado até a data de aniversário: {{
-                            calculos.new.saldoNoAniversario }} meses
+                        <div class="mb-2 flex flex-col gap-1">
+                            <span class="font-semibold ">Tempo acumulado até o aniversário:</span>
+                            <span class="">{{ calculos.new.saldoNoAniversario }} meses</span>
                         </div>
-                        <div class="mb-2">Progride no aniversário: {{ calculos.new.progrideNoAniversario ? 'Sim' :
-                            'Não' }}
+                        <div class="mb-2 flex flex-col gap-1">
+                            <span class="font-semibold ">Progride no aniversário:</span>
+                            <span
+                                :class="calculos.new.progrideNoAniversario ? 'text-green-600 font-bold' : 'text-red-600 font-bold'">
+                                {{ calculos.new.progrideNoAniversario ? 'Sim' : 'Não' }}
+                            </span>
                         </div>
-                        <div class="mb-2">Saldo restante: {{ calculos.new.saldoRestante }} meses</div>
-                        <div class="mb-2">Meses para próxima progressão: {{ calculos.new.mesesParaProxProgressao }}
-                            meses</div>
+                        <div class="mb-2 flex flex-col gap-1">
+                            <span class="font-semibold ">Saldo remanescente:</span>
+                            <span class="">{{ calculos.new.saldoRestante }} meses</span>
+                        </div>
+                        <div class="mb-2 flex flex-col gap-1">
+                            <span class="font-semibold ">Meses até a próxima progressão:</span>
+                            <span class="">{{ calculos.new.mesesParaProxProgressao }} meses</span>
+                        </div>
                     </Panel>
                 </div>
 
-                <Panel header="Próximas progressões">
+                <Panel header="Próximas progressões" class="flex-1 rounded-lg shadow">
                     <DataView :value="calculos.progressoes">
                         <template #list="slotProps">
-                            <div class="flex flex-col gap-2">
-                                <Panel v-for="(item) in slotProps.items" :key="item.data" :header="item.data">
-                                        <div>
-                                            Interstício: {{ item.intersticio[0] }} a {{ item.intersticio[1] }}
-                                        </div>
-                                        <div v-if="item.notas" class="text-sm text-muted">
-                                            {{ item.notas }}
-                                        </div>
+                            <div class="flex flex-col gap-3">
+                                <Panel
+v-for="(item) in slotProps.items" :key="item.data" :header="item.data"
+                                    class="border border-gray-200 rounded-md ">
+                                    <div class="mb-1">
+                                        <span class="font-semibold ">Interstício: </span>
+                                        <span class=""> {{ item.intersticio[0] }} a {{ item.intersticio[1] }}</span>
+                                    </div>
+                                    <div v-if="item.notas" class="text-xs  italic">
+                                        {{ item.notas }}
+                                    </div>
                                 </Panel>
                             </div>
                         </template>
                     </DataView>
-
                 </Panel>
             </div>
         </div>
@@ -104,7 +119,8 @@ type Progressao = {
 
 const maxDate = DateTime.fromObject({ year: 2025, month: 1, day: 1 }).minus({ days: 1 })
 const minDate = maxDate.minus({ months: 18 })
-const date = ref<Date | null>(DateTime.fromObject({ year: 2023, month: 7, day: 4 }).toJSDate())
+//const dataTeste = DateTime.fromObject({ year: 2023, month: 7, day: 4 }).toJSDate()
+const date = ref<Date | null>(null)
 const calculos = computed(() => {
     if (!date.value) return null
     const proxProgressaoOld = DateTime.fromJSDate(date.value).plus({ months: 18 })
