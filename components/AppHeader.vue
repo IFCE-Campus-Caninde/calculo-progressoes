@@ -5,8 +5,9 @@
         Calculadora de Progressão por Mérito para TAE
       </h1>
       <h2 class="text-lg sm:text-xl text-center font-medium">
-        (Válida para progressões a partir de 2025)
+        (Regra de transição de 2025)
       </h2>
+      <h3 class="text-sm text-center">IFCE - <i>Campus</i> Canindé</h3>
     </div>
     <div>
       <DarkModeToggler />
