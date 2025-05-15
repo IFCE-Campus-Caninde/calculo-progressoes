@@ -1,75 +1,59 @@
-# Nuxt Minimal Starter
+# Cálculo de Progressões (IFCE)
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Este é um sistema simples para calcular datas de progressão funcional de servidores do IFCE, considerando as regras antigas e as novas regras a partir de 2025. O objetivo é ajudar servidores da CIS Local e CGP a prever as próximas progressões, levando em conta o saldo de tempo acumulado e as mudanças de legislação.
 
-## Setup
+## Objetivo
 
-Make sure to install dependencies:
+- Calcular a próxima progressão funcional de acordo com a regra antiga (18 meses de interstício).
+- Calcular o saldo de tempo acumulado até janeiro de 2025 e como ele pode ser aproveitado na nova regra (12 meses de interstício).
+- Exibir as próximas datas de progressão e os respectivos interstícios, considerando o saldo e as novas regras.
+- Facilitar a conferência e planejamento das progressões, evitando erros de interpretação das normas.
+
+O sistema segue a interpretação do [Ofício-Circular nº 35/2025/GAB-PROGEP/PROGEP/REITORIA-IFCE](https://sei.ifce.edu.br/sei/controlador_externo.php?acao=documento_conferir&codigo_verificador=7312739&codigo_crc=3CFEF38D&hash_download=e6e4e56bdaee0319554a3d88fa0ae2741c225425cc78d17b36d4034f1840b9a900e720fa42f39a8f4c986dec0b6173d42190cbea8b2fff8e21075d324c660c0c&visualizacao=1&id_orgao_acesso_externo=0).
+
+> **Atenção:** Os resultados são baseados em interpretações e podem ser ajustados conforme novas orientações oficiais.
+
+## Como usar
+
+O sistema será disponibilizado publicamente via **GitHub Pages**. Basta acessar o link do repositório e utilizar a interface web, sem necessidade de instalação.
+
+Se quiser rodar localmente para testar ou contribuir:
 
 ```bash
-# npm
+# Instale as dependências
 npm install
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
+# Rode o servidor de desenvolvimento
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+Acesse em `http://localhost:3000`.
 
-Build the application for production:
+## Build para produção
+
+Para gerar a versão de produção (por exemplo, para publicar no GitHub Pages):
 
 ```bash
-# npm
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
+Para testar o build localmente:
 
 ```bash
-# npm
 npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Deploy no GitHub Pages
+
+O deploy é feito automaticamente via GitHub Actions para o branch `gh-pages`. O sistema ficará disponível em:
+
+```
+https://<seu-usuario>.github.io/calculo-progressoes/
+```
+
+## Referências
+
+- [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction)
+- [Ofício-Circular nº 35/2025/GAB-PROGEP/PROGEP/REITORIA-IFCE](https://sei.ifce.edu.br/sei/controlador_externo.php?acao=documento_conferir&codigo_verificador=7312739&codigo_crc=3CFEF38D&hash_download=e6e4e56bdaee0319554a3d88fa0ae2741c225425cc78d17b36d4034f1840b9a900e720fa42f39a8f4c986dec0b6173d42190cbea8b2fff8e21075d324c660c0c&visualizacao=1&id_orgao_acesso_externo=0)
+
+---

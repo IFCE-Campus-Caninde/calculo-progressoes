@@ -1,17 +1,8 @@
 <template>
-  <Button
-    variant="outlined"
-    rounded
-    aria-label="Alternar Modo Escuro"
-    @click="() => toggleDark()"
-  >
+  <Button variant="outlined" rounded aria-label="Alternar Modo Escuro" @click="() => toggleDark()">
     <template #icon>
-      <Icon
-        :name="
-          isDark ? 'material-symbols:sunny' : 'material-symbols:moon-stars'
-        "
-        class="text-2xl"
-      />
+      <Icon v-if="!isDark" name="material-symbols:moon-stars" class="text-2xl" />
+      <Icon v-else name="material-symbols:sunny" class="text-2xl" />
     </template>
   </Button>
 </template>
