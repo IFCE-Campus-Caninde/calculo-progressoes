@@ -90,7 +90,7 @@
               <Chip class="">{{ calculos.new.saldoNoAniversario }} meses</Chip>
             </div>
             <div class="mb-2 flex flex-col gap-1">
-              <span class="font-semibold">Progride no aniversário:</span>
+              <span class="font-semibold">Progride em Janeiro/2025:</span>
               <Chip
                 ><span
                   :class="

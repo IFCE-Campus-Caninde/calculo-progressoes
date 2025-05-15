@@ -1,4 +1,4 @@
-# Cálculo de Progressões (IFCE)
+# Cálculo de Progressões (IFCE) - Regra de Transição 2025
 
 Este é um sistema simples para calcular datas de progressão funcional de servidores do IFCE, considerando as regras antigas e as novas regras a partir de 2025. O objetivo é ajudar servidores da CIS Local e CGP a prever as próximas progressões, levando em conta o saldo de tempo acumulado e as mudanças de legislação.
 
