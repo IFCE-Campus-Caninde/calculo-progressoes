@@ -104,7 +104,12 @@
                         >
                       </div>
                       <div v-if="item.isNovaRegra" class="text-xs italic">
-                        (Regra Nova - 12 meses)
+                        <span v-if="calculos.intersticioTransicao === item">
+                          (Transição para a Regra Nova - 12 meses)
+                        </span>
+                        <span v-else>
+                          (Regra Nova - 12 meses)
+                        </span>
                       </div>
                       <div v-else class="text-xs italic">
                         (Regra Antiga - 18 meses)
